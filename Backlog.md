@@ -1,7 +1,7 @@
 2020-02-10
 
 1. Satosa aanpassen met keuzescherm tussen Beeld en Geluid IdP en CLARIN discovery service (Jan Pieter)
-2. er achter aan gaan dat Beeld en Geluid in de Surfconext-lijst + de CLARIN discovery service komt te staan (Jaap) (zou punt 2 minder dringend maken)
+2. er achter aan gaan dat Beeld en Geluid in de Surfconext-lijst + de CLARIN discovery service komt te staan (Jaap) (zou punt 1 minder dringend maken)
 3. account linking (Jan Pieter, Jaap, Jauco?)
 4. centrale autorisatie (Jan Pieter, Jaap, Jauco)
 
