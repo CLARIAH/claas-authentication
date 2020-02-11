@@ -5,7 +5,7 @@
 3. account linking (Jan Pieter, Jaap, Jauco?)
 4. centrale autorisatie (Jan Pieter, Jaap, Jauco)
 
-###DONE
+### DONE
 
 * code op Github 
 * extra attribuut 'uid' (https://wiki.surfnet.nl/display/surfconextdev/Attributes+in+SURFconext#AttributesinSURFconext-uiduid) bij IdP's opvragen (Jan Pieter). 2020-02-10: bij Surfconext support en CLARIN de betreffende wijzigingen aangevraagd. Info Surfconext 2020-02-11: deze wijziging zou inhouden dat CLARIAH niet meer onder "Research and Scholarship" zou kunnen vallen. _Als je aan de vrij te geven attributenlijst 'uid' toe gaat voegen vervalt je entity category 'Research and Scholarship' omdat daar eisen aan gesteld worden die stellen dat je een beperkte set attributen kunt gebruiken waar uid geen deel vanuit maakt. Zie: https://wiki.surfnet.nl/display/surfconextdev/Entity+categories#Entitycategories-Researchandscholarship_. Dat is ongewenst. Wens om uid ook te ontvangen vervalt.
