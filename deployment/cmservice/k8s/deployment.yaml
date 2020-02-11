@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cmservice-deployment
+  labels:
+    app: cmservice
+  namespace: <YOUR-NAMESPACE>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cmservice
+  template:
+    metadata:
+      labels:
+        app: cmservice
+        external-ingress: enabled
+    spec:
+      containers:
+        - name: cmservice
+          image: <YOUR-IMAGE>
+          resources:
+            limits:
+              cpu: 200m
+              memory: 50Mi
+            requests:
+              cpu: 200m
+              memory: 50Mi
+          ports:
+            - containerPort: 80
+          env:
+            - name: CMSERVICE_PORT
+              value: "80"
+            - name: CMSERVICE_DEBUG
+              value: "0"
+          volumeMounts:
+            - name: keys
+              mountPath: "/opt/cmservice/keys"
+              readOnly: true
+            - name: data
+              mountPath: "/opt/cmservice/data"
+              readOnly: false
+      volumes:
+        - name: keys
+          secret:
+            secretName: satosa-pubkey
+        - name: data
+          persistentVolumeClaim:
+            claimName: cmservice-data

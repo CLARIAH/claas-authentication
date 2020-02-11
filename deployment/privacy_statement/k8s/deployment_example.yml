@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: privacy-statement-deployment
+  namespace: <YOUR-NAMESPACE>
+spec:
+  template:
+    metadata:
+      labels:
+        app: privacy-statement
+        external-ingress: enabled
+    spec:
+      containers:
+      - image: docker.io/sebp/lighttpd:1.4.54-r0
+        imagePullPolicy: Always
+        name: privacy-statement
+        tty: true
+        resources:
+          limits:
+            cpu: 200m
+            memory: 50Mi
+          requests:
+            cpu: 200m
+            memory: 50Mi
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/www/localhost/htdocs
+          name: files
+          readOnly: true
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: privacy-statement-files
+        name: files

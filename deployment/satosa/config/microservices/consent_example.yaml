@@ -1,0 +1,6 @@
+module: satosa.micro_services.consent.Consent
+name: Consent
+config:
+  api_url: "https://<YOUR-CMSERVICE-URL>"
+  redirect_url: "https://<YOUR-CMSERVICE-URL>/consent"
+  sign_key: "keys/satosa_signing"

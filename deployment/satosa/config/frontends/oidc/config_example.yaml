@@ -1,0 +1,17 @@
+module: satosa.frontends.openid_connect.OpenIDConnectFrontend
+name: OIDC
+config:
+  signing_key_path: cert/satosa_proxy.key
+  # db_uri: mongodb://db.example.com # optional: only support MongoDB, will default to in-memory storage if not specified
+  client_db_path: frontends/oidc/registered-relying-parties.json
+  provider:
+    client_registration_supported: No
+    response_types_supported: # see: https://openid.net/specs/openid-connect-core-1_0.html#Authentication
+      - "code"
+      # - "id_token token" #implicit flow
+    subject_types_supported: # see: http://openid.net/specs/openid-connect-core-1_0.html#SubjectIDTypes
+      - "pairwise"
+    scopes_supported: # see: https://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims
+      - "openid"
+      - "profile"
+      - "email"

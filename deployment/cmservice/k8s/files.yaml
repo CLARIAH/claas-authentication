@@ -1,0 +1,199 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cmservice-files
+  namespace: <YOUR-NAMESPACE>
+data:
+  base.mako: |
+    <%!
+        import json
+        def to_json(d):
+            return json.dumps(d, indent=0)
+    %>
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <title>VOPaas <%block name="head_title"></%block></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="content-type" content="text/html;" charset="utf-8"/>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/style.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    </head>
+    <body>
+
+    <div class="row">
+        <div class="wrapper col-md-8 col-md-offset-2">
+            <div class="title row">
+                <div class="col-md-11">
+                    <h1><%block name="page_header"></%block></h1>
+                </div>
+                <!-- Language selection -->
+                <div class="col-md-1">
+                    <form action="${form_action}" method="GET">
+                        <select name="lang" id="lang" onchange="this.form.submit()"
+                                class="dropdown-menu-right">
+                            <option value="en">EN</option>
+                            <option value="sv">SV</option>
+                        </select>
+                        <%block name="extra_inputs"></%block>
+                    </form>
+                </div>
+            </div>
+
+            ${self.body()}
+
+            <hr>
+            <footer>
+            </footer>
+        </div>
+    </div>
+
+
+    <script type="application/javascript">
+        "use strict";
+
+        // Mark the selected language in the dropdown
+        var lang = "${language}";
+        var lang_option = document.querySelector("option[value=" + lang + "]");
+        lang_option.selected = true;
+    </script>
+
+    </body>
+    </html>
+  consent.mako: |
+    <%!
+        def list2str(claim):
+            # more human-friendly and avoid "u'" prefix for unicode strings in list
+            if isinstance(claim, list):
+                claim = ", ".join(claim)
+
+            return claim
+    %>
+
+    <%inherit file="base.mako"/>
+
+    <%block name="head_title">Consent</%block>
+    <%block name="page_header">${_("Consent - Your consent is required to continue.")}</%block>
+    <%block name="extra_inputs">
+        <input type="hidden" name="state" value="${ state }">
+    </%block>
+
+    ## ${_(consent_question)}
+
+    <br>
+    <hr>
+
+    <div><b>${requester_name}</b> ${_("would like to access the following attributes:")}</div>
+    <br>
+    <div style="clear: both;">
+        % for attribute in released_claims:
+            <strong>${attribute}</strong>
+            <br>
+            <div class="attribute">
+                  <input type="checkbox"
+                         name="${attribute.lower()}"
+                         value="${released_claims[attribute] | list2str}"
+                         checked>
+                  ${released_claims[attribute] | list2str}
+            </div>
+        % endfor
+    </div>
+
+    % if locked_claims:
+
+    <div style="clear: both;" class="locked_attr_div">
+        <hr>
+        <h3>${_("Locked attributes")}</h3>
+        <p>${_("The following attributes are not optional. If you don't want to send these you need to abort.")}</p>
+        % for attribute in locked_claims:
+            <strong class="attr_header">${_(attribute)}</strong>
+            <br>
+            <div class="locked_attribute">
+                ${locked_claims[attribute] | list2str}
+            </div>
+        % endfor
+    </div>
+    % endif
+    <br>
+
+    <span style="float: left;">
+        ${_("For how many months do you want to give consent for this particular service:")}
+    </span>
+    <br>
+
+    <form name="allow_consent" id="allow_consent_form" action="/save_consent" method="GET"
+          style="float: left">
+        <select name="month" id="month" class="dropdown-menu-right">
+            % for month in months:
+                <option value="${month}">${month}</option>
+            % endfor
+        </select>
+        <br>
+        <br>
+        <input name="Yes" value="${_('Ok, accept')}" id="submit_ok" type="submit">
+        <input name="No" value="${_('No, cancel')}" id="submit_deny" type="submit">
+
+        <input type="hidden" id="attributes" name="attributes"/>
+        <input type="hidden" id="consent_status" name="consent_status"/>
+        ${extra_inputs()}
+    </form>
+    <br>
+    <br>
+    <br>
+
+    <script>
+        $('input:checked').each(function () {
+            if (!${select_attributes.lower()}) {
+                $(this).removeAttr("checked")
+            }
+        });
+
+        $('#allow_consent_form').submit(function (ev) {
+            ev.preventDefault(); // to stop the form from submitting
+
+            var attributes = [];
+            $('input:checked').each(function () {
+                attributes.push(this.name);
+            });
+
+            var consent_status = $('#consent_status');
+
+            var status = $("input[type=submit][clicked=true]").attr("name");
+            consent_status.val(status);
+
+            if (attributes.length == 0) {
+                consent_status.val("No");
+                alert("${_('No attributes where selected which equals no consent where given')}");
+            }
+
+            % for attr in locked_claims:
+                attributes.push("${attr}");
+            % endfor
+            $('#attributes').val(attributes);
+
+            this.submit(); // If all the validations succeeded
+        });
+
+        $("form input[type=submit]").click(function () {
+            $("input[type=submit]", $(this).parents("form")).removeAttr("clicked");
+            $(this).attr("clicked", "true");
+        });
+    </script>
+  list_values.mako: |
+    ${_('mail')}
+    ${_('address')}
+    ${_('name')}
+    ${_('surname')}
+    ${_('givenname')}
+    ${_('displayname')}
+    ${_('edupersontargetedid')}
+
+    ${_('year')}
+    ${_('month')}
+    ${_('never')}

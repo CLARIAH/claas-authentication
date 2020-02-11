@@ -1,0 +1,45 @@
+#--- SATOSA Config ---#
+BASE: <YOUR-SATOSA-URL>
+INTERNAL_ATTRIBUTES: "internal_attributes.yaml"
+COOKIE_STATE_NAME: "SATOSA_STATE"
+# STATE_ENCRYPTION_KEY: # provided by env var
+CUSTOM_PLUGIN_MODULE_PATHS:
+  - "backends/saml"
+  - "frontends/oidc"
+  - "frontends/saml"
+BACKEND_MODULES:
+  - "backends/saml/config.yaml"
+FRONTEND_MODULES:
+  - "frontends/saml/config.yaml"
+  - "frontends/oidc/config.yaml"
+MICRO_SERVICES:
+  - "microservices/attribute_generation.yaml"
+  - "microservices/hash_eppn.yaml"
+  - "microservices/consent.yaml"
+LOGGING:
+  version: 1
+  formatters:
+    simple:
+      format: "[%(asctime)-19.19s] [%(levelname)-5.5s]: %(message)s"
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: DEBUG
+      formatter: simple
+      stream: ext://sys.stdout
+    info_file_handler:
+      class: logging.handlers.RotatingFileHandler
+      level: INFO
+      formatter: simple
+      filename: info.log
+      maxBytes: 10485760 # 10MB
+      backupCount: 20
+      encoding: utf8
+  loggers:
+    satosa:
+      level: DEBUG
+      handlers: [console]
+      propagate: no
+  root:
+    level: INFO
+    handlers: [info_file_handler]

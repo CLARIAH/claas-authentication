@@ -1,0 +1,3 @@
+[submodule "deployment/cmservice/CMservice"]
+	path = deployment/cmservice/CMservice
+	url = https://github.com/knaw-huc/CMservice

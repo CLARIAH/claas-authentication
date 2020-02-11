@@ -1,0 +1,61 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: satosaauth-deployment
+  namespace: <YOUR-NAMESPACE>
+spec:
+  template:
+    metadata:
+      labels:
+        app: satosaauth
+        external-ingress: enabled
+        egress: enabled
+    spec:
+      containers:
+      - name: satosaauth
+        image: <YOUR-IMAGE>
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 500m
+            memory: 850Mi
+          requests:
+            cpu: 500m
+            memory: 850Mi
+        ports:
+          - containerPort: 80
+        env:
+          - name: SATOSA_STATE_ENCRYPTION_KEY
+            value: <SATOSA_STATE_ENCRYPTION_KEY>
+          - name: SATOSA_USER_ID_HASH_SALT
+            value: <SATOSA_USER_ID_HASH_SALT>
+          - name: PROXY_PORT
+            value: "80"
+          - name: DATA_DIR
+            value: "/opt/satosa/etc"
+        volumeMounts:
+          - name: certs
+            mountPath: "/opt/satosa/etc/cert"
+            readOnly: true
+          - name: keys
+            mountPath: "/opt/satosa/etc/keys"
+            readOnly: true
+          - name: sps
+            mountPath: "/opt/satosa/etc/frontends/saml/registered-service-providers/"
+            readOnly: true
+          - name: rps
+            mountPath: "/opt/satosa/etc/frontends/oidc/registered-relying-parties/"
+            readOnly: true
+      volumes:
+        - name: certs
+          secret:
+            secretName: satosa-certs
+        - name: keys
+          secret:
+            secretName: satosa-keys
+        - name: sps
+          secret:
+            secretName: satosa-sps
+        - name: rps
+          secret:
+            secretName: satosa-rps

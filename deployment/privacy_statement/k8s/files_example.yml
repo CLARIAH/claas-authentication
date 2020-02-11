@@ -1,0 +1,113 @@
+apiVersion: v1
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8"/>
+    <title>Privacy statement</title>
+      <style>
+      @import url("https://fonts.googleapis.com/css?family=Nunito:300,300i,700");
+        html,
+            body
+        {
+          padding-left: 20px;
+        }
+
+        a { text-decoration: none; }
+        * { box-sizing: border-box; }
+        a { color: #0087d4; }
+
+        body
+        {
+          font-family: 'Nunito', sans-serif;
+          font-weight: 300;
+          font-size: 18px;
+          line-height: 140%;
+          font-style: normal;
+          color: #3e3e3e;
+          margin-top: 15px;
+        }
+
+        h1
+        {
+          font-size: 1.5em;
+          line-height: 130%;
+          font-weight: 700;
+        }
+
+        h2
+        {
+          font-size: 1.3em;
+          line-height: 130%;
+          font-weight: 700;
+        }
+
+        h3
+        {
+          font-size: 1em;
+          line-height: 130%;
+          font-weight: 700;
+        }
+
+        h4
+        {
+          font-size: 1em;
+          line-height: 130%;
+          font-weight: 700;
+          display: inline;
+        }
+
+        @media (min-width: 600px)
+        {
+          body
+          {
+            font-size: 18px;
+            line-height: 150%;
+          }
+
+          h1 { font-size: 2em; }
+          h1, h2, h3, h4 { line-height: 150%; }
+        }
+
+        h1, h2, h3, h4
+        {
+          margin-top: 0;
+          margin-bottom: .3em;
+        }
+
+        p
+        {
+          margin-top: 0;
+          margin-bottom: 1em;
+        }
+      </style>
+    </head>
+    <body>
+    <h1>Privacy policy</h1>
+
+    <h2>Name of the service</h2>
+    <p></p>
+
+    <h2>Description of the service</h2>
+    <p></p>
+
+    <h2>Contact persons</h2>
+    <ul>
+    <li></li>
+    </ul>
+
+    <h2>Jurisdiction</h2>
+    <p></p>
+
+    <h2>Personal data processed</h2>
+    <p></p>
+
+    <h2>Code of conduct</h2>
+    <p></p>
+    </body>
+    </html>
+kind: ConfigMap
+metadata:
+  name: privacy-statement-files
+  namespace: <YOUR-NAMESPACE>

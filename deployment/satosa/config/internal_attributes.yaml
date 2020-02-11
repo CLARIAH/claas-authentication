@@ -1,0 +1,46 @@
+# in this file you can specify the "mapped" version of the attributes and define how they get translated
+
+# so there's these attributes called "address" and "displayname"
+# these are defined by satosa
+# in this file they are mapped to attributes depending on the provider
+# so "address" is "addresses.str" in "orcid"
+# for saml the translation is a bit more complex because they don't use 
+# the saml property urn but a mapped version of it (e.g. urn:mace:dir:attribute-def:eduPersonPrincipalName -> eduPersonPrincipalName)
+# to find the original names you can check https://github.com/IdentityPython/pysaml2/blob/f22506ed9ffb737e6e26942fa5d3f3ba851c0a87/src/saml2/attributemaps/saml_uri.py
+# this "feature" will be removed from a future pysaml2
+# https://github.com/IdentityPython/pysaml2/pull/556
+
+# attributes:
+#   displayname:
+#     openid: [nickname]
+#     saml: [displayName]
+#   eduPersonPrincipalName:
+#     openid: [sub]
+#     saml: [eduPersonPrincipalName]
+#   mail:
+#     openid: [email]
+#     saml: [eduPersonPrincipalName]
+# user_id_from_attrs: [eduPersonPrincipalName]
+# user_id_to_attr: eduPersonPrincipalName
+
+attributes:
+  displayname:
+    openid: [nickname]
+    saml: [displayName]
+  edupersontargetedid:
+    openid: [edupersontargetedid]
+    saml: [eduPersonTargetedID]
+  eppn:
+    openid: [sub]
+    saml: [eduPersonPrincipalName, edupersonprincipalname]
+  mail:
+    openid: [email]
+    saml: [email, emailAdress, mail]
+  schac_home_organisation:
+    openid: [schac_home_organisation]
+    saml: [schacHomeOrganization, eduPersonAffiliation, eduPersonScopedAffiliation]
+  idp:
+    openid: [idp]
+    saml: [idp]
+user_id_from_attrs: [eppn]
+# user_id_to_attr: eppn

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: idaccess-deployment
+  labels:
+    app: idaccess
+  namespace: <YOUR-NAMESPACE>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: idaccess
+  template:
+    metadata:
+      labels:
+        app: idaccess
+        external-ingress: enabled
+        egress: enabled
+    spec:
+      containers:
+        - name: idaccess
+          image: <YOUR-IMAGE>
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 200m
+              memory: 50Mi
+            requests:
+              cpu: 200m
+              memory: 50Mi
+          ports:
+            - containerPort: 80
+          env:
+            - name: SERVERNAME
+              value: <SERVERNAME>
+            - name: OIDC_SERVER_METADATA_URL
+              value: <OIDC_SERVER_METADATA_URL>
+            - name: OIDC_CLIENT_ID
+              value: <OIDC_CLIENT_ID>
+            - name: OIDC_CLIENT_SECRET
+              value: <OIDC_CLIENT_SECRET>
+            - name: OIDC_REDIRECT_URL
+              value: <OIDC_REDIRECT_URL>
+            - name: OIDC_SCOPE
+              value: "openid email profile"
+            - name: OIDC_CLAIMS
+              value: claims={"userinfo":{"edupersontargetedid":null,"schac_home_organisation":null,"nickname":null,"email":null,"eppn":null,"idp":null}}

@@ -1,0 +1,16 @@
+module: satosa.micro_services.hasher.Hasher
+name: Hasher
+config:
+  # default settings that apply to every requester
+  "":
+    # default salt configuration is required
+    salt: j9fQG8HUUtlxX1TSz662dXZ6h2HqEd5dJruNsLITj
+    # the hash algorithm to use (default: sha512)
+    alg: sha1
+    # whether subject_id should be hashed (default: yes)
+    subject_id: no
+    # a list of attributes to hash (default: [])
+    attributes:
+      - eppn
+    usermapping:
+      "<eppn>": <old_id>
