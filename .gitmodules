@@ -1,3 +1,6 @@
 [submodule "deployment/cmservice/CMservice"]
 	path = deployment/cmservice/CMservice
 	url = https://github.com/knaw-huc/CMservice
+[submodule "deployment/docker-pyff"]
+	path = deployment/docker-pyff
+	url = https://github.com/CLARIAH/docker-pyff
