@@ -1,4 +1,4 @@
-FROM satosa/satosa:v4.4.0
+FROM satosa/satosa:v6.1.0
 
 RUN apt-get update && apt-get install -y jq wget && apt-get clean
 
