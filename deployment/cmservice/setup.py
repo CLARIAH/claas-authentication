@@ -33,7 +33,7 @@ setup(
         'Flask-Babel==0.12.2',
         'Flask-Mako==0.4',
         'Jinja2==2.10.3',
-        'Mako==1.1.0',
+        'Mako==1.2.2',
         'MarkupSafe==1.1.1',
         'SQLAlchemy==1.3.11',
         'Werkzeug==0.16.0',
