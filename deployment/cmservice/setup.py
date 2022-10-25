@@ -51,7 +51,7 @@ setup(
         'pytz==2019.3',
         'requests==2.22.0',
         'six==1.13.0',
-        'urllib3==1.25.7'
+        'urllib3==1.26.5'
     ],
     zip_safe=False,
     message_extractors={'.': [
