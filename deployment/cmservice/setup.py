@@ -27,7 +27,7 @@ setup(
                  'Topic :: Software Development :: Libraries :: Python Modules',
                  'Programming Language :: Python :: 3.4'],
     install_requires=[
-        'Babel==2.7.0',
+        'Babel==2.9.1',
         'Click==7.0',
         'Flask==1.1.1',
         'Flask-Babel==0.12.2',
