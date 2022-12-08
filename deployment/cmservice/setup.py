@@ -38,7 +38,7 @@ setup(
         'SQLAlchemy==1.3.11',
         'Werkzeug==0.16.0',
         'alembic==1.3.1',
-        'certifi==2019.11.28',
+        'certifi==2022.12.7',
         'dataset==1.1.2',
         'future==0.18.2',
         'gunicorn==20.0.4',
