@@ -36,7 +36,7 @@ setup(
         'Mako==1.1.0',
         'MarkupSafe==1.1.1',
         'SQLAlchemy==1.3.11',
-        'Werkzeug==0.16.0',
+        'Werkzeug==2.2.3',
         'alembic==1.3.1',
         'certifi==2019.11.28',
         'dataset==1.1.2',
